@@ -8,24 +8,12 @@ import {
     StyleSheet,
 } from 'react-native';
 
-// const Text = (props) => {
-//     return (
-//         <View>
-//             <RNText>{ props.text }</RNText>
-//         </View>
-//     );
-// };
-
-// const styles = StyleSheet.create({
-
-// });
-
 type CustomProps = {
     styles?: RNTextStyleProps;
     variant?: string;
 }
 
-type TextProps = CustomProps & RNTextProps;
+type TextProps = RNTextProps & CustomProps;
 
 const Text: React.FC<TextProps> = ({children, styles}) => (
     <RNText style={styles}>{children}</RNText>

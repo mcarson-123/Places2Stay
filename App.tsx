@@ -3,11 +3,12 @@ import Text from './src/component/base/text/index';
 import {
   SafeAreaView  
 } from 'react-native';
+import Home from './src/screen/Home';
 
 const App: React.FC = () => {
   return (
     <SafeAreaView>
-      <Text>Spice up your life</Text>
+      <Home />
     </SafeAreaView>
   );
 };
