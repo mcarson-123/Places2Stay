@@ -16,7 +16,16 @@ type CustomProps = {
 type TextProps = RNTextProps & CustomProps;
 
 const Text: React.FC<TextProps> = ({children, styles}) => (
-    <RNText style={styles}>{children}</RNText>
+    <RNText style={[styles, styling.title]}>{children}</RNText>
 );
+
+const styling = StyleSheet.create({
+    title: {
+        fontFamily: 'EncodeSans-Regular',
+    },
+    base: {
+
+    }
+});
 
 export default Text;
