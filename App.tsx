@@ -5,12 +5,14 @@ import {
 } from 'react-native';
 import Home from './src/screen/Home';
 import Stay from './src/screen/Stay';
+import Search from './src/screen/Search';
 
 const App: React.FC = () => {
   return (
     <SafeAreaView>
       {/* <Home /> */}
-      <Stay />
+      {/* <Stay /> */}
+      <Search />
     </SafeAreaView>
   );
 };
