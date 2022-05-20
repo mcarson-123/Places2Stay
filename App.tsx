@@ -10,9 +10,9 @@ import Search from './src/screen/Search';
 const App: React.FC = () => {
   return (
     <SafeAreaView>
-      {/* <Home /> */}
+      <Home />
       {/* <Stay /> */}
-      <Search />
+      {/* <Search /> */}
     </SafeAreaView>
   );
 };
