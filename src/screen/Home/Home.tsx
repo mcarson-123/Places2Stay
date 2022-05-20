@@ -54,28 +54,67 @@ const Home: React.FC = () => {
         // setScrollPos(e.nativeEvent.contentOffset.y)
         const pos = e.nativeEvent.contentOffset.y;
 
-        if (pos > 50) {
-            console.log("attempting to animate**");
+        // if (pos > 100) {
+        //     console.log("pos** ", pos);
+        //     setSearchIsVisible(true);
+    
+        //     setAnimateHeaderStyle({transform: [{translateY: animatedValue}]});
+        //     const options = {
+        //         toValue: pos,
+        //         duration: 10,
+        //         useNativeDriver: false,
+        //     };
+        //     Animated.timing(animatedValue, options).start();
+        // }
+
+        //bring in secondary search container
+        if (pos > 100) {
+            console.log("pos** ", pos);
             setSearchIsVisible(true);
     
             setAnimateHeaderStyle({transform: [{translateY: animatedValue}]});
             const options = {
-                toValue: pos,
+                toValue: 105,
                 duration: 1000,
                 useNativeDriver: false,
             };
             Animated.timing(animatedValue, options).start();
         }
+
+        // if (pos > 0 && pos < 150) {
+        //     // slide up off screen
+        //     setAnimateHeaderStyle({transform: [{translateY: animatedValue}]});
+        //     const options = {
+        //         toValue: -pos,
+        //         duration: 10,
+        //         useNativeDriver: false,
+        //     };
+        //     Animated.timing(animatedValue, options).start();
+        // }
+
+        // if (pos > 250) {
+        //     setAnimateHeaderStyle({transform: [{translateY: animatedValue}]});
+        //     const options = {
+        //         toValue: 20,
+        //         duration: 1000,
+        //         useNativeDriver: false,
+        //     };
+        //     Animated.timing(animatedValue, options).start();
+        // }
     }
 
     return(
         <View style={styles.container}>
+            <Animated.View style={[styles.searchContainer, styles.secondarySearchContainer, {transform: [{translateY: animatedValue}]}]}>
+                <Text styles={styles.text}>Try 'Victoria'</Text>
+            </Animated.View>
             <FlatList
+                style={styles.listContainer}
                 ListHeaderComponent={
                     <View>
-                        <Animated.View style={[styles.searchContainer, {transform: [{translateY: animatedValue}]}]}>
+                        <View style={[styles.searchContainer]}>
                             <Text styles={styles.text}>Try 'Victoria'</Text>
-                        </Animated.View>
+                        </View>
                         <SectionHeader 
                             title={homeMockData.sections.placeCtas.title}
                             description={homeMockData.sections.placeCtas.description}
@@ -83,7 +122,7 @@ const Home: React.FC = () => {
                     </View>
                 }
                 onScroll={(e) => onScrollEvent(e)}
-                scrollEventThrottle={10}
+                scrollEventThrottle={1}
                 data={homeMockData.sections.placeCtas.places}
                 renderItem={
                     ({item}) => {
@@ -97,9 +136,14 @@ const Home: React.FC = () => {
                     );
                 }}
             />
-            {/* <ScrollView>
-            <Search/>
-                <SectionHeader 
+            {/* <ScrollView 
+                onScroll={(e) => onScrollEvent(e)}
+                scrollEventThrottle={1}
+            >
+                <Animated.View style={[styles.searchContainer, {transform: [{translateY: animatedValue}]}]}>
+                    <Text styles={styles.text}>Try 'Victoria'</Text>
+                </Animated.View>
+                <SectionHeader
                     title="Find your getaway"
                     description="Our spaces are designed for comfort - whether you are working, relaxing, or craving some spaces"
                 />
@@ -170,8 +214,17 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'white',
         margin: 32,
+        // marginTop: 0,
         padding: 12,
         alignItems: 'center',
+        zIndex: 1,
+        // position: 'absolute',
+    },
+    secondarySearchContainer: {
+        marginTop: -100,
+    },
+    listContainer: {
+        top: 0
     },
     text: {
         fontSize: 16,
