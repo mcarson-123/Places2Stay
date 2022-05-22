@@ -45,41 +45,47 @@ const Home: React.FC = () => {
     const animatedValue = useRef(new Animated.Value(0)).current;
     const [animateHeaderStyle, setAnimateHeaderStyle] = useState({});
 
-    // const interpolate = animatedValue.interpolate({
-    //     inputRange: [0, 1],
-    //     outputRange: []
-    // });
+    const interpolate = animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-100, 105]
+    });
 
     const onScrollEvent = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
         // setScrollPos(e.nativeEvent.contentOffset.y)
         const pos = e.nativeEvent.contentOffset.y;
 
         // if (pos > 100) {
-        //     console.log("pos** ", pos);
-        //     setSearchIsVisible(true);
-    
-        //     setAnimateHeaderStyle({transform: [{translateY: animatedValue}]});
-        //     const options = {
-        //         toValue: pos,
-        //         duration: 10,
-        //         useNativeDriver: false,
-        //     };
-        //     Animated.timing(animatedValue, options).start();
-        // }
-
-        //bring in secondary search container
-        if (pos > 100) {
             console.log("pos** ", pos);
             setSearchIsVisible(true);
     
             setAnimateHeaderStyle({transform: [{translateY: animatedValue}]});
             const options = {
-                toValue: 105,
-                duration: 1000,
+                toValue: pos,
+                duration: 0,
                 useNativeDriver: false,
             };
             Animated.timing(animatedValue, options).start();
-        }
+        // }
+
+        // //bring in secondary search container
+        // if (pos > 100) {
+        //     console.log("pos** ", pos);
+        //     setSearchIsVisible(true);
+    
+        //     // setAnimateHeaderStyle({transform: [{translateY: animatedValue}]});
+        //     // const options = {
+        //     //     toValue: 105,
+        //     //     duration: 1000,
+        //     //     useNativeDriver: false,
+        //     // };
+        //     setAnimateHeaderStyle({transform: [{translateY: interpolate}]});
+        //     const options = {
+        //         toValue: 1,
+        //         duration: 1000,
+        //         useNativeDriver: false,
+        //     };
+        //     Animated.timing(animatedValue, options).start();
+        // }
 
         // if (pos > 0 && pos < 150) {
         //     // slide up off screen
@@ -105,10 +111,10 @@ const Home: React.FC = () => {
 
     return(
         <View style={styles.container}>
-            <Animated.View style={[styles.searchContainer, styles.secondarySearchContainer, {transform: [{translateY: animatedValue}]}]}>
+            {/* <Animated.View style={[styles.searchContainer, styles.secondarySearchContainer, {transform: [{translateY: animatedValue}]}]}>
                 <Text styles={styles.text}>Try 'Victoria'</Text>
-            </Animated.View>
-            <FlatList
+            </Animated.View> */}
+            {/* <FlatList
                 style={styles.listContainer}
                 ListHeaderComponent={
                     <View>
@@ -135,8 +141,8 @@ const Home: React.FC = () => {
                         />
                     );
                 }}
-            />
-            {/* <ScrollView 
+            /> */}
+            <ScrollView 
                 onScroll={(e) => onScrollEvent(e)}
                 scrollEventThrottle={1}
             >
@@ -171,7 +177,7 @@ const Home: React.FC = () => {
                     address="408 St. Jacques | 1 Br"
                     location="Old Montreal, Montreal"
                 />
-            </ScrollView> */}
+            </ScrollView>
             <View style={styles.cities}>
                 <SectionHeader 
                     title="25+ Cities to Explore"

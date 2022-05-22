@@ -14,6 +14,8 @@ import SearchIcon from '../../component/base/icon/SearchIcon';
 import searchMockData from './searchMockData';
 import PlaceIcon from '../../component/base/icon/PlaceIcon';
 import BackIcon from '../../component/base/icon/BackIcon';
+import Toggle from '../../component/base/Toggle';
+import BottomDrawer from '../../component/base/BottomDrawer';
 
 const filterData = (input: string) => {
     const citiesList = searchMockData.cities;
@@ -29,6 +31,8 @@ const filterData = (input: string) => {
 
 const Search: React.FC = () => {
     const [input, setInput] = useState('');
+    const [selectedToggle, setSelectedToggle] = useState(0);
+
     return(
         <View style={styles.container}>
             <View style={styles.searchBar}>
@@ -40,6 +44,12 @@ const Search: React.FC = () => {
                     value={input}
                 />
             </View>
+            <Toggle 
+                text1='Calendar'
+                text2="I'm flexible"
+                // selected={selectedToggle}
+                // setSelected={setSelectedToggle}
+            />
             <View style={styles.searchResults}>
                 <FlatList
                     data={filterData(input)}
@@ -77,7 +87,6 @@ const styles = StyleSheet.create({
     },
     searchResults: {
         fontSize: 16,
-
     },
     placeItem: {
         flexDirection: 'row',
