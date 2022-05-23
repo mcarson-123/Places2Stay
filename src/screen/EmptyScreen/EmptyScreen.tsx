@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import BottomDrawer from '../../component/base/BottomDrawer';
+import BottomDrawerBothGestures from '../../component/base/BottomDrawerBothGestures';
 import BottomDrawerDrag from '../../component/base/BottomDrawerDrag';
 
 const EmptyScreen: React.FC = () => {
@@ -22,13 +23,20 @@ const EmptyScreen: React.FC = () => {
                     <Text>And even more</Text>
                 </View>
             </BottomDrawerDrag> */}
-            <BottomDrawer>
+            {/* <BottomDrawer>
                 <View>
                     <Text>This is some drawer content</Text>
                     <Text>This is some MORE drawer content</Text>
                     <Text>And even more</Text>
                 </View>
-            </BottomDrawer>
+            </BottomDrawer> */}
+            <BottomDrawerBothGestures>
+                <View>
+                    <Text>This is some drawer content</Text>
+                    <Text>This is some MORE drawer content</Text>
+                    <Text>And even more</Text>
+                </View>
+            </BottomDrawerBothGestures>
         </View>
         
     );
