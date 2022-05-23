@@ -55,7 +55,7 @@ const Home: React.FC = () => {
         const pos = e.nativeEvent.contentOffset.y;
 
         // if (pos > 100) {
-            console.log("pos** ", pos);
+            // console.log("pos** ", pos);
             setSearchIsVisible(true);
     
             setAnimateHeaderStyle({transform: [{translateY: animatedValue}]});
