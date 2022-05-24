@@ -11,6 +11,7 @@ import {
 type ToggleProps = {
     text1: string;
     text2: string;
+    onPress(value: number): void;
 //     selected: number,
 //     setSelected: any,
 };
@@ -25,6 +26,7 @@ type ToggleProps = {
 const Toggle: React.FC<ToggleProps> = ({
     text1,
     text2,
+    onPress,
 }) => {
     // const onSelect = (option: number) => {
     //     setSelected(option);
@@ -49,6 +51,7 @@ const Toggle: React.FC<ToggleProps> = ({
         console.log('selecting 0')
         if (selected == 1) {
             setSelected(0);
+            onPress(0);
             setAnimateStyle({transform: [{translateX: interpolate}]})
             const options = {toValue: 0, useNativeDriver: false, duration: 500};
             Animated.timing(animateValue, options).start();
@@ -59,6 +62,7 @@ const Toggle: React.FC<ToggleProps> = ({
         setSelected(1);
         if (selected == 0) {
             setSelected(1);
+            onPress(1);
             setAnimateStyle({transform: [{translateX: interpolate}]})
             const options = {toValue: 1, useNativeDriver: false, duration: 500};
             Animated.timing(animateValue, options).start();
@@ -108,7 +112,7 @@ const styles = StyleSheet.create({
         margin: 8,
     },
     selectedText: {
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
     }
 });
 

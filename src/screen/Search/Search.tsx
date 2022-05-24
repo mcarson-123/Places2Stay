@@ -4,17 +4,20 @@ import {
     StyleSheet,
     TextInput,
     FlatList,
+    Pressable,
+    Text,
 } from 'react-native';
-import Text from '../../component/base/text/Text';
+// import Text from '../../component/base/text/Text';
 // import TextInput from './component/TextInput/TextInput';
 
 // import SearchIcon from '../../assets/icons/search_icon.svg';
 import SearchIcon from '../../component/base/icon/SearchIcon';
 
+import {NavigationProp} from '@react-navigation/native';
+
 import searchMockData from './searchMockData';
 import PlaceIcon from '../../component/base/icon/PlaceIcon';
 import BackIcon from '../../component/base/icon/BackIcon';
-import Toggle from '../../component/base/Toggle';
 import BottomDrawer from '../../component/base/BottomDrawer';
 
 const filterData = (input: string) => {
@@ -29,7 +32,11 @@ const filterData = (input: string) => {
     return results;
 }
 
-const Search: React.FC = () => {
+type SearchProps = {
+    navigation: NavigationProp<any, any>;
+}
+
+const Search: React.FC<SearchProps> = ({navigation}) => {
     const [input, setInput] = useState('');
     const [selectedToggle, setSelectedToggle] = useState(0);
 
@@ -44,20 +51,21 @@ const Search: React.FC = () => {
                     value={input}
                 />
             </View>
-            <Toggle 
-                text1='Calendar'
-                text2="I'm flexible"
-                // selected={selectedToggle}
-                // setSelected={setSelectedToggle}
-            />
             <View style={styles.searchResults}>
+                <Text style={styles.heading}>Getaways Near You</Text>
                 <FlatList
                     data={filterData(input)}
                     renderItem={({item}) => {
                         return(
                             <View style={styles.placeItem}>
                                 <PlaceIcon height={32} width={32} color={'blue'}/>
-                                <Text>{item}</Text>
+                                <Pressable 
+                                    onPress={() => {
+                                        navigation.navigate('SearchPlace', {place: item})}
+                                    }
+                                >
+                                    <Text>{item}</Text>
+                                </Pressable>
                             </View>
                         );
                     }}
@@ -87,6 +95,9 @@ const styles = StyleSheet.create({
     },
     searchResults: {
         fontSize: 16,
+    },
+    heading: {
+        fontSize: 32,
     },
     placeItem: {
         flexDirection: 'row',

@@ -18,6 +18,8 @@ import CityTile from "./component/CityTile";
 
 import homeMockData from "./homeMockData";
 
+import {NavigationProp, RouteProp} from '@react-navigation/native';
+
 const ItemSeparator = () => {
     return <View style={styles.separator}></View>
 }
@@ -38,7 +40,17 @@ const ListFooter = () => {
     return <Text>This is the footer</Text>
 }
 
-const Home: React.FC = ({navigation}) => {
+type HomeProps = {
+    route: RouteProp<{params: {place: string}}>;
+    navigation: NavigationProp<any, any>;
+}
+
+const Home: React.FC<HomeProps> = ({route, navigation}) => {
+    const place = route?.params?.place;
+    console.log("PLACE** ", place);
+
+    const headerTitle = place ? `250+ Places in ${place}` : "Find your getaway"
+
     const [scrollPos, setScrollPos] = useState(0);
     const [searchIsVisible, setSearchIsVisible] = useState(false);
     // console.log("scrollpos*** ", scrollPos);
@@ -151,12 +163,12 @@ const Home: React.FC = ({navigation}) => {
                     <Button 
                         title="Search Input"
                         styles={styles.text}
-                        onPress={() => navigation.navigate('Search')}
+                        onPress={() => navigation.navigate('SearchNavigator', { screen: 'Search' })}
                     />
                     {/* <Text styles={styles.text}>Try 'Victoria'</Text> */}
                 </Animated.View>
                 <SectionHeader
-                    title="Find your getaway"
+                    title={headerTitle}
                     description="Our spaces are designed for comfort - whether you are working, relaxing, or craving some spaces"
                 />
                 <PlaceCta 
@@ -184,7 +196,7 @@ const Home: React.FC = ({navigation}) => {
                     location="Old Montreal, Montreal"
                 />
             </ScrollView>
-            <View style={styles.cities}>
+            {!place && <View style={styles.cities}>
                 <SectionHeader 
                     title="25+ Cities to Explore"
                 />
@@ -201,7 +213,7 @@ const Home: React.FC = ({navigation}) => {
                     // ListHeaderComponent={ListHeader}
                     // ListFooterComponent={ListFooter}
                 />
-            </View>
+            </View>}
         </View>
     );
 }
