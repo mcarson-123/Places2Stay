@@ -8,6 +8,7 @@ import {
     Animated,
     NativeScrollEvent,
     NativeSyntheticEvent,
+    Button,
 } from 'react-native';
 import SectionHeader from "./component/SectionHeader";
 import PlaceCta from "./component/PlaceCta";
@@ -37,7 +38,7 @@ const ListFooter = () => {
     return <Text>This is the footer</Text>
 }
 
-const Home: React.FC = () => {
+const Home: React.FC = ({navigation}) => {
     const [scrollPos, setScrollPos] = useState(0);
     const [searchIsVisible, setSearchIsVisible] = useState(false);
     // console.log("scrollpos*** ", scrollPos);
@@ -147,7 +148,12 @@ const Home: React.FC = () => {
                 scrollEventThrottle={1}
             >
                 <Animated.View style={[styles.searchContainer, {transform: [{translateY: animatedValue}]}]}>
-                    <Text styles={styles.text}>Try 'Victoria'</Text>
+                    <Button 
+                        title="Search Input"
+                        styles={styles.text}
+                        onPress={() => navigation.navigate('Search')}
+                    />
+                    {/* <Text styles={styles.text}>Try 'Victoria'</Text> */}
                 </Animated.View>
                 <SectionHeader
                     title="Find your getaway"

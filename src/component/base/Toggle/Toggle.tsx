@@ -5,7 +5,7 @@ import {
     Text,
     Animated,
     StyleSheet,
-    TouchableOpacity,
+    Pressable,
 } from 'react-native';
 
 type ToggleProps = {
@@ -71,14 +71,14 @@ const Toggle: React.FC<ToggleProps> = ({
             </Animated.View>
             <View style={styles.toggleOptions}>
                 <View style={styles.toggleItem}>
-                    <TouchableOpacity  onPress={onSelect0}>
+                    <Pressable  onPress={onSelect0}>
                     <Text style={selected == 0 && styles.selectedText}>{text1}</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
                 <View style={styles.toggleItem}>
-                    <TouchableOpacity onPress={onSelect1}>
+                    <Pressable onPress={onSelect1}>
                         <Text style={selected == 1 && styles.selectedText}>{text2}</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
             </View>
         </View>

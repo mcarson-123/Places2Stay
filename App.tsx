@@ -9,11 +9,39 @@ import Search from './src/screen/Search';
 import EmptyScreen from './src/screen/EmptyScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CalendarIcon from './src/component/base/icon/CalendarIcon';
 import HouseIcon from './src/component/base/icon/HouseIcon';
 import SearchIcon from './src/component/base/icon/SearchIcon';
 
-const {Navigator, Screen} = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+const TabScreen = () => {
+  return(
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused}) => {
+          // let iconName;
+          if(route.name === 'Home') {
+            const color = focused ? 'black' : '#666';
+            return <HouseIcon color={color} height={24} width={24}/>
+          } else if (route.name === 'Stay') {
+            const color = focused ? 'black' : '#666';
+            return <CalendarIcon color={color} height={24} width={24}/>
+          };
+        },
+        tabBarActiveTintColor: 'lightGrey',
+        tabBarInactiveTintColor: 'grey',
+        headerShown: false,
+        tabBarShowLabel: false,
+      })}
+    >
+      <Tab.Screen name="Home" component={Home} key="Home"/>
+      <Tab.Screen name="Stay" component={Stay} key="Stay"/>
+    </Tab.Navigator>
+  );
+}
 
 const App: React.FC = () => {
   return (
@@ -22,31 +50,14 @@ const App: React.FC = () => {
         {/* <Stay /> */}
         {/* <Search /> */}
         {/* <EmptyScreen/> */}
-        <Navigator
-          screenOptions={({route}) => ({
-            tabBarIcon: ({focused}) => {
-              // let iconName;
-              if(route.name === 'Home') {
-                const color = focused ? 'black' : '#666';
-                return <HouseIcon color={color} height={24} width={24}/>
-              } else if (route.name === 'Stay') {
-                const color = focused ? 'black' : '#666';
-                return <CalendarIcon color={color} height={24} width={24}/>
-              } else if (route.name === 'Search') {
-                const color = focused ? 'black' : '#666';
-                return <SearchIcon color={color} height={24} width={24} />
-              }
-            },
-            tabBarActiveTintColor: 'lightGrey',
-            tabBarInactiveTintColor: 'grey',
-            headerShown: false,
-            tabBarShowLabel: false,
-          })}
-        >
-          <Screen name="Home" component={Home} key="Home"/>
-          <Screen name="Stay" component={Stay} key="Stay"/>
-          <Screen name="Search" component={Search} key="Search"/>
-        </Navigator>
+      <Stack.Navigator>
+        <Stack.Group> 
+          <Stack.Screen name='Tab' component={TabScreen} key='Tab'/>
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="Search" component={Search} key="Search"/>
+        </Stack.Group>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
