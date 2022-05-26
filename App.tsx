@@ -20,6 +20,34 @@ import SearchHeader from './src/component/base/SearchHeader';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+
+const config = {
+  screens: {
+    Tab: {
+      screens: {
+        Home: {
+          screens: {
+            Home: 'home'
+          }
+        },
+        Stay: {
+          screens: {
+            Stay: 'stay'
+          }
+        }
+      }
+    }
+  }
+};
+
+const linking = {
+  prefixes: [
+    /* your linking prefixes */
+    "places2stay://",
+  ],
+  config
+};
+
 const TabScreen = () => {
   return(
     <Tab.Navigator
@@ -48,7 +76,8 @@ const TabScreen = () => {
 
 const App: React.FC = () => {
   return (
-    <NavigationContainer>
+
+    <NavigationContainer linking={linking}>
         {/* <Home /> */}
         {/* <Stay /> */}
         {/* <Search /> */}

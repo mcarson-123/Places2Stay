@@ -81,8 +81,8 @@ const BottomDrawer: React.FC = ({
             style={[
                 styles.container, 
                 { top: topPosition }, 
-                {transform: [{translateY: pan.y}]},
                 animateStyle,
+                {transform: [{translateY: pan.y}]},
             ]}
             {...panResponder.panHandlers}
         >
