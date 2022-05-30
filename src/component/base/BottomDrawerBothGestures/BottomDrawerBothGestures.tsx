@@ -10,6 +10,8 @@ import {
     PanResponder,
 } from 'react-native';
 
+const MAX_VAL = -450;
+
 const BottomDrawerBothGestures: React.FC = ({
     children,
 }) => {
@@ -17,6 +19,12 @@ const BottomDrawerBothGestures: React.FC = ({
     const topPosition = height - 120;
 
     const [open, setOpen] = useState(false);
+
+    const animation = useRef(new Animated.ValueXY()).current;
+    const [offset, setOffset] = useState(0);
+    const animatedStyle = {
+    transform: [...animation.getTranslateTransform()]
+    }
 
     const animateValue = useRef(new Animated.Value(0)).current;
     const [animateStyle, setAnimateStyle] = useState({});
@@ -57,10 +65,11 @@ const BottomDrawerBothGestures: React.FC = ({
     const panResponder = PanResponder.create({
         onMoveShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
-            pan.setOffset({
-                x: pan.x._value,
-                y: pan.y._value,
-            });
+            setAnimViewStyle(animatedStyle);
+            // pan.setOffset({
+            //     x: pan.x._value,
+            //     y: pan.y._value,
+            // });
         },
         // onPanResponderMove: Animated.event([
         //     null,
@@ -74,18 +83,22 @@ const BottomDrawerBothGestures: React.FC = ({
             //     pan.setValue({x: 0, y: -524})
             // }
             // setIsAnimating(false);
-            setAnimViewStyle({transform: [{translateY: pan.y}]});
-            return panMover(e, gesture);
+            // setAnimViewStyle({transform: [{translateY: pan.y}]});
+            // return panMover(e, gesture);
+            const newVal = offset + gesture.dy < MAX_VAL ? MAX_VAL : offset + gesture.dy;
+            animation.setValue({x: 0, y: newVal})
         },
         onPanResponderStart: () => {
             console.log("pan responder start**");
             // setAnimViewStyle({transform: [{translateY: pan.y}]});
         },
-        onPanResponderRelease: () => {
+        onPanResponderRelease: (e, gesture) => {
             // check if open or closed and set state?
             // setIsAnimating(false);
-            pan.flattenOffset();
-            console.log("pan y on release** ", pan.y);
+            // pan.flattenOffset();
+            // console.log("pan y on release** ", pan.y);
+            const newVal = offset + gesture.dy < MAX_VAL ? MAX_VAL : offset + gesture.dy;
+            setOffset(newVal);
         },
         onPanResponderEnd: () => {
             // setIsAnimating(true);
@@ -100,6 +113,9 @@ const BottomDrawerBothGestures: React.FC = ({
                 styles.container, 
                 { top: topPosition }, 
                 // isAnimating && animateStyle,
+                // animatedStyle,
+                // animViewStyle,
+                // animViewStyle,
                 // !isAnimating && {transform: [{translateY: pan.y}]},
                 animViewStyle,
             ]}

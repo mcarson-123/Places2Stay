@@ -30,6 +30,7 @@ const SearchNavigator: React.FC<SearchNavigatorProps> = ({route, options}) => {
                 key="SearchPlace"
                 // options={({navigation, route}) => ({
                 //     headerShown: true,
+                // look at transitions to remove them for a more seamless look  
                 //     title: "",
                 //     headerLeft: () => (
                 //         <SearchHeader title={route.params?.place || ""} onPress={() => {navigation.goBack()}}/>

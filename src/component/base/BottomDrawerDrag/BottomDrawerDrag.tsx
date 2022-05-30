@@ -10,29 +10,38 @@ import {
     PanResponder,
 } from 'react-native';
 
+const MAX_VAL = -450;
+
 const BottomDrawerDrag: React.FC = ({
     children,
 }) => {
     const { height } = Dimensions.get('window');
     const topPosition = height - 120;
 
-    const [open, setOpen] = useState(false);
+    const animation = useRef(new Animated.ValueXY()).current;
+    const [offset, setOffset] = useState(0);
 
-    const pan = React.useRef(new Animated.ValueXY()).current;
-    const panMover = Animated.event([
-        null,
-        {
-            dx: pan.x,
-            dy: pan.y,
-        }
-    ], {useNativeDriver: false});
+    // const pan = React.useRef(new Animated.ValueXY()).current;
+    // const panMover = Animated.event([
+    //     null,
+    //     {
+    //         dx: pan.x,
+    //         dy: pan.y,
+    //     }
+    // ], {useNativeDriver: false});
+
+    const animatedStyle = {
+        transform: [...animation.getTranslateTransform()]
+      }
+
     const panResponder = PanResponder.create({
         onMoveShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
-            pan.setOffset({
-                x: pan.x._value,
-                y: pan.y._value,
-            });
+            console.log("granted");
+            // pan.setOffset({
+            //     x: pan.x._value,
+            //     y: pan.y._value < -542 ? -542 : pan.y._value,
+            // });
         },
         // onPanResponderMove: Animated.event([
         //     null,
@@ -42,15 +51,44 @@ const BottomDrawerDrag: React.FC = ({
         //     }
         // ], {useNativeDriver: false}),
         onPanResponderMove: (e, gesture) => {
-            if (pan.y._value < -542) {
-                pan.setValue({x: 0, y: -524})
-            }
-            return panMover(e, gesture);
+
+            const newVal = offset + gesture.dy < MAX_VAL ? MAX_VAL : offset + gesture.dy;
+            animation.setValue({x: 0, y: newVal})
+            // console.log("aaand we're moving** ");
+            // console.log("PAN Y", pan.y)
+        
+            // if (pan.y._value < -542) {
+            //     console.log("too high");
+            //     pan.setValue({x: 0, y: -542})
+            //     const newValue = new Animated.ValueXY({x: 0, y: -542})
+            //     return Animated.event([
+            //         null,
+            //         {
+            //             dx: pan.x,
+            //             dy: pan.y,
+            //         }
+            //     ], {useNativeDriver: false})(e, {dx: gesture.dx, dy: -542});
+
+            // }
+
+            // return Animated.event([
+            //         null,
+            //         {
+            //             dx: pan.x,
+            //             dy: pan.y,
+            //         }
+            //     ], {useNativeDriver: false})(e, gesture);
+
+            // // if swiping down allow it
+
         },
-        onPanResponderRelease: () => {
-            // check if open or closed and set state?
-            pan.flattenOffset();
-            console.log("pan y on release** ", pan.y);
+        onPanResponderRelease: (e, gesture) => {
+            // // check if open or closed and set state?
+            // pan.flattenOffset();
+            // animation.flattenOffset()
+            const newVal = offset + gesture.dy < MAX_VAL ? MAX_VAL : offset + gesture.dy;
+            setOffset(newVal);
+            // console.log("pan y on release** ", pan.y);
         }
     })
 
@@ -61,7 +99,7 @@ const BottomDrawerDrag: React.FC = ({
             style={[
                 styles.container, 
                 { top: topPosition }, 
-                {transform: [{translateY: pan.y}]}
+                animatedStyle
             ]}
             {...panResponder.panHandlers}
         >

@@ -81,8 +81,8 @@ const App: React.FC = () => {
         {/* <Home /> */}
         {/* <Stay /> */}
         {/* <Search /> */}
-        {/* <EmptyScreen/> */}
-      <Stack.Navigator>
+        <EmptyScreen/>
+      {/* <Stack.Navigator>
         <Stack.Group> 
           <Stack.Screen name='Tab' component={TabScreen} key='Tab'/>
         </Stack.Group>
@@ -100,7 +100,7 @@ const App: React.FC = () => {
           // })}
           />
         </Stack.Group>
-      </Stack.Navigator>
+      </Stack.Navigator> */}
     </NavigationContainer>
   );
 };
